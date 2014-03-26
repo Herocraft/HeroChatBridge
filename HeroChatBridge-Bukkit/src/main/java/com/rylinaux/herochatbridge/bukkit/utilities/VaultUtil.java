@@ -19,7 +19,7 @@ public class VaultUtil {
     }
 
     public static String getPlayerName(String player) {
-        return VaultUtil.getPlayerPrefix(player) + player + VaultUtil.getPlayerSuffix(player);
+        return VaultUtil.getPlayerPrefix(player) + VaultUtil.getPlayerInfoColor(player) + player + VaultUtil.getPlayerSuffix(player);
     }
 
     public static String getPlayerPrefix(String player) {
@@ -30,4 +30,7 @@ public class VaultUtil {
         return HeroChatBridgeBukkit.getChat().getPlayerSuffix(Bukkit.getWorlds().get(0), player);
     }
 
+    public static String getPlayerInfoColor(String player) {
+        return HeroChatBridgeBukkit.getChat().getPlayerInfoString(Bukkit.getWorlds().get(0), player, "color", "");
+    }
 }
