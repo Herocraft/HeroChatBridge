@@ -60,9 +60,9 @@ public class HeroChatPluginMessageListener implements PluginMessageListener {
             {
                 if (!c.isIgnoring(channelName))
                 {
-                    this.plugin.getLogger().info("Player: " + c.getName());
+                //    this.plugin.getLogger().info("Player: " + c.getName());
                     String JSONMessage = "tellraw " + c.getName()+" " + message;
-                    this.plugin.getLogger().info("Message: " + JSONMessage);
+                   // this.plugin.getLogger().info("Message: " + JSONMessage);
                     Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), JSONMessage);
                 }
             }
