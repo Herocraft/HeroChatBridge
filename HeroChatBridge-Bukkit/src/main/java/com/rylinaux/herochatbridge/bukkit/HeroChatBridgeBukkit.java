@@ -41,7 +41,8 @@ public class HeroChatBridgeBukkit extends JavaPlugin {
         initConfig();
         hookAPI();
 
-        this.getServer().getPluginManager().registerEvents(new HeroChatListener(this), this);
+        hcl = new HeroChatListener(this);
+        this.getServer().getPluginManager().registerEvents(hcl, this);
 
         this.getServer().getMessenger().registerIncomingPluginChannel(this, CHANNEL, new HeroChatPluginMessageListener(this));
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, CHANNEL);
