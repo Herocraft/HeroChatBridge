@@ -1,6 +1,7 @@
 package com.rylinaux.herochatbridge.bukkit.listeners;
 
 import com.dthielke.herochat.Channel;
+import com.dthielke.herochat.Chatter;
 import com.dthielke.herochat.Herochat;
 
 import com.google.common.io.ByteArrayDataInput;
@@ -9,6 +10,7 @@ import com.google.common.io.ByteStreams;
 import com.rylinaux.herochatbridge.bukkit.HeroChatBridgeBukkit;
 import com.rylinaux.herochatbridge.bukkit.utilities.MessageFormatter;
 
+import java.util.Set;
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
@@ -49,8 +51,25 @@ public class HeroChatPluginMessageListener implements PluginMessageListener {
         String message = in.readUTF();
         String world = in.readUTF();
         String fromServer = in.readUTF();
+        Boolean bJson = in.readBoolean();
 
-        channel.sendRawMessage(MessageFormatter.format(playerName, message, fromServer, world, channel));
+        if(bJson)
+        {
+            Set<Chatter> chattersToSend = channel.getMembers();
+            for(Chatter c:chattersToSend)
+            {
+                if (!c.isIgnoring(channelName))
+                {
+                    this.plugin.getLogger().info("Player: " + c.getName());
+                    String JSONMessage = "tellraw " + c.getName()+" " + message;
+                    this.plugin.getLogger().info("Message: " + JSONMessage);
+                    Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), JSONMessage);
+                }
+            }
+
+        }
+        else
+            channel.sendRawMessage(MessageFormatter.format(playerName, message, fromServer, world, channel));
 
     }
 

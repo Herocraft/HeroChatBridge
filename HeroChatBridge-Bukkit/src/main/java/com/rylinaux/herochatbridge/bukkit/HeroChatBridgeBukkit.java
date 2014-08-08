@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.logging.Level;
 
 import org.bukkit.plugin.RegisteredServiceProvider;
+import org.bukkit.plugin.ServicePriority;
+import org.bukkit.plugin.ServicesManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class HeroChatBridgeBukkit extends JavaPlugin {
@@ -23,6 +25,10 @@ public class HeroChatBridgeBukkit extends JavaPlugin {
 
     private List<String> ignored = null;
 
+    public  HeroChatListener hcl;
+
+    private ServicesManager sm;
+
     @Override
     public void onEnable() {
 
@@ -33,6 +39,7 @@ public class HeroChatBridgeBukkit extends JavaPlugin {
         }
 
         initConfig();
+        hookAPI();
 
         this.getServer().getPluginManager().registerEvents(new HeroChatListener(this), this);
 
@@ -80,4 +87,17 @@ public class HeroChatBridgeBukkit extends JavaPlugin {
         return ignored;
     }
 
+    public void sendJsonMessage(String channel, String player, String json , String world) {
+        hcl.transmit(channel, player, json, world, true) ;
+    }
+
+    private void hookAPI () {
+        try {
+
+            this.getServer().getServicesManager().register(HeroChatBridgeBukkit.class, this, this, ServicePriority.Normal);
+
+        } catch (Exception e) {
+            this.getLogger().info("[API Connect] There was an error hooking HeroChatBridgeBukkit - check to make sure you're using a compatible version!");
+        }
+    }
 }
