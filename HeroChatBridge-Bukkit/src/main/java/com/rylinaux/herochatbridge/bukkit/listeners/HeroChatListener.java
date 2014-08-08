@@ -31,20 +31,25 @@ public class HeroChatListener implements Listener {
                     String player = event.getSender().getName();
                     String message = event.getMessage();
                     String world = event.getSender().getPlayer().getWorld().getName();
-                    transmit(channel, player, message, world);
+                    transmit(channel, player, message, world,false);
                 }
             }
         }
     }
 
-    private void transmit(String channel, String player, String message, String world) {
+    public void transmit(String channel, String player, String message, String world , boolean JSON) {
+
+
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF(channel);
         out.writeUTF(player);
         out.writeUTF(message);
         out.writeUTF(world);
         out.writeUTF(plugin.getServerKey());
+        out.writeBoolean(JSON);
         plugin.getServer().getOnlinePlayers()[0].sendPluginMessage(plugin, HeroChatBridgeBukkit.CHANNEL, out.toByteArray());
+
     }
+
 
 }
