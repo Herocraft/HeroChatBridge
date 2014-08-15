@@ -89,7 +89,8 @@ public class HeroChatBridgeBukkit extends JavaPlugin {
     }
 
     public void sendJsonMessage(String channel, String player, String json , String world) {
-        hcl.transmit(channel, player, json, world, true) ;
+        if(isValidChannel(channel))
+            hcl.transmit(channel, player, json, world, true) ;
     }
 
     private void hookAPI () {
