@@ -9,6 +9,7 @@ import com.google.common.io.ByteStreams;
 
 import com.rylinaux.herochatbridge.bukkit.HeroChatBridgeBukkit;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -47,7 +48,7 @@ public class HeroChatListener implements Listener {
         out.writeUTF(world);
         out.writeUTF(plugin.getServerKey());
         out.writeBoolean(JSON);
-        plugin.getServer().getOnlinePlayers()[0].sendPluginMessage(plugin, HeroChatBridgeBukkit.CHANNEL, out.toByteArray());
+        plugin.getServer().getOnlinePlayers().iterator().next().sendPluginMessage(plugin, HeroChatBridgeBukkit.CHANNEL, out.toByteArray());
 
     }
 
